@@ -1,6 +1,6 @@
 from flask import Blueprint
 
-from database import get_hour
+from repository.connection import get_hour
 
 test = Blueprint('test', __name__)
 
