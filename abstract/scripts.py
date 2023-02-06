@@ -12,7 +12,9 @@ class ScriptsProvider:
 
     def _preload(self):
         for filename in os.listdir(self._source):
-            self._mapping[filename] = os.path.join(self._source, filename)
+            match = re.match(r'(?P<filename>.+)\.sql$', filename, re.IGNORECASE)
+            if match:
+                self._mapping[match.group('filename')] = os.path.join(self._source, filename)
 
     def _parse_script(self, code: str):
         return dict(
