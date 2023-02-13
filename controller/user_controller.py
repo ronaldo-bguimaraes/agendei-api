@@ -10,5 +10,4 @@ def get():
 
 @user.post('/')
 def post():
-    request.get_json(force=True)
-    return '[OK]'
+    return ''

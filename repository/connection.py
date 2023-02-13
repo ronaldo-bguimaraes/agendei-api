@@ -1,14 +1,16 @@
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker
-
-engine = create_engine('mysql+pymysql://root:root@db/information_schema', echo=True)
-
-session = sessionmaker(bind=engine, future=True)
+import pymysql
+from pymysql import cursors
+from sqlalchemy import create_engine
 
 
-def get_hour():
-    with engine.connect() as connection:
-        script = text('select current_timestamp(6)')
-        result = connection.execute(script)
-        result = result.fetchone()
-        return result[0].__str__()
+def get_connection():
+    engine = create_engine('mysql+pymysql:')
+    return pymysql.connect(
+        host='',
+        user='root',
+        password='root',
+        cursorclass=cursors.DictCursor,
+    )
+
+
+get_connection()
