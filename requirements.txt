@@ -1,5 +1,7 @@
-flask
-sqlalchemy
-pymysql
+flask~=2.2.2
+sqlalchemy~=2.0.1
+pymysql~=1.0.2
 cryptography
 gunicorn
+flask_sqlalchemy
+python-dotenv
