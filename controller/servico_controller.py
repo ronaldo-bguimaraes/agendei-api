@@ -1,23 +1,20 @@
-from flask import Blueprint, request, jsonify
-from sqlalchemy import text
+from flask import Blueprint, request
 
-from repository.connection import db
+from dto.servico import ServicoDto
+from service.exception import ServiceException
+from service.servico import ServicoService
 
 servico = Blueprint('servico', __name__)
 
-
-@servico.get('/list')
-def get():
-    with db.engine.connect() as conn:
-        script = text(
-            """
-            select distinct t.table_schema from information_schema.tables t
-            """
-        )
-        result = conn.execute(script)
-        return [x[0] for x in result.fetchall()]
+serv = ServicoService()
 
 
 @servico.post('/')
 def post():
-    return request.get_json()
+    json = request.get_json()
+    dto = ServicoDto.from_json(json)
+    try:
+        serv.cadastrar(dto)
+        return 'cadastrado'
+    except ServiceException as e:
+        return f'erro ao cadastrar: {e}'

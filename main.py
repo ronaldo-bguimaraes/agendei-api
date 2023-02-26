@@ -1,16 +1,10 @@
 import os
 
-from dotenv import load_dotenv
 from flask import Flask
 
 from controller.servico_controller import servico
-from repository.connection import create_db
-
-load_dotenv()
 
 app = Flask(__name__)
-
-create_db(app)
 
 app.register_blueprint(servico, url_prefix='/servico')
 
